@@ -1,0 +1,71 @@
+#:kivy 2.0.0
+<FormularioPersona>:
+    orientation: 'vertical'
+    spacing: 10
+
+    # Nombre Input
+    BoxLayout:
+        size_hint: 1, None
+        height: 35
+        Label:
+            id: label_nombre
+            text: 'Nombre:'
+            size_hint_x: None
+            width: 100
+            halign: 'left'
+        TextInput:
+            id: entrada_nombre
+            multiline: False
+            hint_text: 'Ingrese su nombre:'
+    
+    # Edad Input
+    BoxLayout:
+        size_hint: 1, None
+        height: 35
+        Label:
+            id: label_edad
+            text: 'Edad:'
+            size_hint_x: None
+            width: 100
+            halign: 'left'
+        Slider:
+            id: slider_edad
+            min: 1
+            max: 120
+            value: 18
+            size_hint: 0.6, None
+            height: 30
+            on_value: entrada_edad.text = str(int(self.value))
+        TextInput:
+            id: entrada_edad
+            multiline: False
+            input_filter: "float"
+            size_hint_x: None
+            width: 55
+            on_text: slider_edad.value = float(entrada_edad.text) if entrada_edad.text else 0
+
+    # Género Input
+    BoxLayout:
+        size_hint: 1, None
+        height: 35
+        Label:
+            id: label_sexo
+            text: 'Género:'
+            size_hint_x: None
+            width: 100
+            halign: 'left'
+            height: 35
+        Spinner:
+            id: spinner_sexo
+            text: 'Género'
+            values: ['Masculino', 'Femenino']
+            size_hint: None, None
+            size: 100, 30
+
+    Button:
+        id: boton_guardar
+        text: 'Guardar'
+        size_hint: None, None
+        size: 300, 50
+        pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+        background_color: '#00FF00'
