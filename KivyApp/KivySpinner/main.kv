@@ -1,0 +1,20 @@
+#:kivy 2.0.0
+<MiSpinner>
+    BoxLayout:
+        orientation: 'vertical'
+        size: root.width, root.height
+        padding: 50, 50, 50, 50 
+
+        Label:
+            id: click_label
+            text: 'Elegir destino'
+            font_size: 32
+
+        Spinner:
+            id: spinner_id
+            text: 'Vacaciones de invierno'
+            values: ['Ushuaia', 'El Calafate', 'Bariloche', 'Mendoza']
+            size_hint: 0.5, 0.1  # Ajusta los valores de size_hint según tus necesidades
+            pos_hint: {'center_x': 0.5}
+
+            on_text: root.spinner_click(spinner_id.text)
