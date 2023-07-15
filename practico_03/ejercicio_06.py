@@ -18,6 +18,18 @@ class Article:
 
     # Completar
 
+    def __eq__(self, other: Article) -> bool:
+        return self.name == other.name
+    
+    def __hash__(self) -> int:
+        return hash(self.name)
+    
+    def __str__(self) -> str:
+        return self.name
+    
+    def __repr__(self) -> str:
+        return f"Article('{self.name}')"
+
 
 # NO MODIFICAR - INICIO
 class ShoppingCart:
@@ -51,6 +63,20 @@ class ShoppingCart:
 
     # Completar
 
+    def __str__ (self) -> str:                                        # Muestra el objeto en string 
+        return str([str(i) for i in self.articles])
+    
+    def __repr__(self) -> str:
+        return f"ShoppingCart({[art for art in self.articles]})"
+    
+    def __eq__(self, other):
+        if isinstance(other, ShoppingCart):
+            return set(self.articles) == set(other.articles)
+        return False
+    
+    def __add__(self, other: ShoppingCart) -> ShoppingCart: 
+        return ShoppingCart(self.articles + other.articles)
+
 
 # NO MODIFICAR - INICIO
 
@@ -78,4 +104,4 @@ assert ShoppingCart().add(tv).add(pera) == ShoppingCart().add(pera).add(tv)
 combinado = ShoppingCart().add(manzana) + ShoppingCart().add(pera)
 assert combinado == ShoppingCart().add(manzana).add(pera)
 
-# NO MODIFICAR - FIN
+# # NO MODIFICAR - FIN
