@@ -2,8 +2,11 @@
 
 import datetime
 
-from practico_04.ejercicio_02 import agregar_persona
-from practico_04.ejercicio_06 import reset_tabla
+from ejercicio_02 import agregar_persona
+from ejercicio_04 import buscar_persona
+from ejercicio_06 import reset_tabla
+
+from sqlite3 import connect
 
 
 def agregar_peso(id_persona, fecha, peso):
@@ -20,8 +23,30 @@ def agregar_peso(id_persona, fecha, peso):
     - ID del peso registrado.
     - False en caso de no cumplir con alguna validacion."""
 
-    pass # Completar
+    # Completar
+    # Creamos la conexion la db
+    conn = connect('database.db')
+    c = conn.cursor()
 
+    if buscar_persona(id_persona):  #Validamos que la persona exista
+        c.execute('SELECT Fecha FROM PersonaPeso WHERE IdPersona = ? AND Fecha > ?',(id_persona, fecha))
+        if c.fetchone() is None:  #Validamos que no tenga fechas posteriores de peso
+            c.execute('''
+            INSERT INTO 
+                PersonaPeso (IdPersona, Fecha, Peso)
+            VALUES (?, ? ,?)
+            ''',(id_persona, fecha, peso))
+            # Guardamos y cerramos conexion
+            conn.commit()
+            conn.close()
+            # Devolvemos el id
+            return id_persona
+    
+    # Guardamos y cerramos conexion
+    conn.commit()
+    conn.close()
+    # Devolvemos que no se pudo agregar
+    return False
 
 # NO MODIFICAR - INICIO
 @reset_tabla
