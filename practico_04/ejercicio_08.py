@@ -2,9 +2,12 @@
 
 import datetime
 
-from practico_04.ejercicio_02 import agregar_persona
-from practico_04.ejercicio_06 import reset_tabla
-from practico_04.ejercicio_07 import agregar_peso
+from ejercicio_02 import agregar_persona
+from ejercicio_04 import buscar_persona
+from ejercicio_06 import reset_tabla
+from ejercicio_07 import agregar_peso
+
+from sqlite3 import connect
 
 
 def listar_pesos(id_persona):
@@ -30,7 +33,39 @@ def listar_pesos(id_persona):
 
     - False en caso de no cumplir con alguna validacion.
     """
-    return []
+
+    # Creamos la conexion a la DB
+    conn = connect('database.db')
+    c = conn.cursor()
+
+    if buscar_persona(id_persona): # Validamos que exista la persona
+        
+        select_pesos = c.execute(    # Guardamos la lista de pesos de la persona con Fecha y Peso
+            '''
+            SELECT
+                Fecha,
+                Peso
+            FROM
+                PersonaPeso
+            WHERE
+                IdPersona = ?
+            ''', (id_persona,)
+        )
+
+        # Inicializamos la lista y guardamos cada valor del SELECT
+        listaPesos = [(datetime.datetime.strptime(fila[0], "%Y-%m-%d %H:%M:%S").strftime("%Y-%m-%d"), fila[1]) for fila in select_pesos]
+
+        # Cerramos la conexion
+        conn.close()
+
+        # Devolvemos la lista de pesos
+        return listaPesos
+    
+    # Si la persona no existe cerramos la conexion y devolvemos False
+    conn.close()
+    return False
+
+    
 
 
 # NO MODIFICAR - INICIO
