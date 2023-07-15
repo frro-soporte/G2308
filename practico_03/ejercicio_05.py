@@ -13,6 +13,22 @@ class Auto:
 
     # Completar
 
+    def __init__ (self, nombre, precio):
+        self.__precio = precio
+        self.__nombre = nombre.capitalize()
+
+    @property
+    def nombre(self):
+        return self.__nombre
+    
+    @property
+    def precio(self):
+        return round(self.__precio, 2)
+    
+    @precio.setter
+    def precio(self, precio):
+        self.__precio = precio
+
 
 # NO MODIFICAR - INICIO
 auto = Auto("Ford", 12_875.456)
@@ -40,6 +56,21 @@ class Auto:
     """Re-Escribir utilizando DataClasses"""
 
     # Completar
+
+    _nombre: str
+    _precio: float
+
+    @property
+    def nombre(self):
+        return self._nombre.capitalize()
+    
+    @property
+    def precio(self):
+        return round(self._precio, 2)
+    
+    @precio.setter
+    def precio(self, precio):
+        self._precio = precio
 
 
 # NO MODIFICAR - INICIO
